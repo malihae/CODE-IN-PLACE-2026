@@ -1,0 +1,30 @@
+def main():
+    translations = {
+        "hello": "hola",
+        "dog": "perro",
+        "cat": "gato",
+        "well": "bien",
+        "us": "nos",
+        "nothing": "nada",
+        "house": "casa",
+        "time": "tiempo"
+    }
+
+    correct = 0  # must initialize before use
+
+    for english in translations:
+        answer = input("What is the Spanish translation for " + english + "? ")
+
+        if answer == translations[english]:
+            print("\nThat is correct!")
+            correct += 1
+        else:
+            print("\nThat is incorrect, the Spanish translation for", english, "is", translations[english] + ".")
+
+        print()
+
+    print("You got " + str(correct) + "/" + str(len(translations)) + " words correct, come study again soon!")
+
+
+if __name__ == '__main__':
+    main()

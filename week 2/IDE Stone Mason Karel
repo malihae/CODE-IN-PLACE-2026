@@ -1,0 +1,63 @@
+from karel.stanfordkarel import *
+
+"""
+File: main.py
+--------------------
+When you finish writing this file, Karel should have repaired 
+each of the columns in the temple
+"""
+
+
+def main():
+
+   
+    # Build 4 columns, moving 4 steps east between each
+    build_column()
+    move_to_next_column()
+    build_column()
+    move_to_next_column()
+    build_column()
+    move_to_next_column()
+    build_column()
+
+def build_column():
+    """
+    Builds a column of 5 beepers straight up, then returns to base.
+    Pre:  Karel is at the BASE of the column, facing East
+    Post: Karel is back at the BASE of the column, facing East
+    """
+    turn_left()           # Turn to face North (upward)
+    put_beeper()          # Beeper at row 1 (base)
+    move()                # Move to row 2
+    put_beeper()          # Beeper at row 2
+    move()                # Move to row 3
+    put_beeper()          # Beeper at row 3
+    move()                # Move to row 4
+    put_beeper()          # Beeper at row 4
+    move()                # Move to row 5
+    put_beeper()          # Beeper at row 5 (top)
+    turn_around()         # Now face South to come back down
+    move()                # Down to row 4
+    move()                # Down to row 3
+    move()                # Down to row 2
+    move()                # Down to row 1 (base)
+    turn_left()           # Face East again
+
+def move_to_next_column():
+    """
+    Moves Karel 4 steps East to reach the next column.
+    Pre:  Karel at base of current column, facing East
+    Post: Karel at base of next column, facing East
+    """
+    move()
+    move()
+    move()
+    move()
+
+def turn_around():
+    """Turns Karel 180 degrees (two left turns)."""
+    turn_left()
+    turn_left()
+
+if __name__ == '__main__':
+    main()

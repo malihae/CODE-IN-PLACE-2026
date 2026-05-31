@@ -1,0 +1,137 @@
+from karel.stanfordkarel import *
+
+def main():
+    """
+    UNIVERSAL PATTERN SOLVER:
+    Works for ANY grid size (3x5, 6x6, 3x1, etc.)
+    
+    Core Strategy:
+    - Alternate between East and West traversal
+    - Each traversal checks for beepers alternately
+    - Creates diagonal checkerboard pattern automatically
+    - Self-adjusting for any world dimensions
+    """
+    put_beeper()
+    complete_east_line()
+    return_main()
+
+def complete_east_line():
+    """
+    EAST TRAVERSAL: Move right, alternately place/skip beepers.
+    When hitting east wall, turn and prepare for west traversal.
+    
+    Logic:
+    - Move east while alternating placement pattern
+    - At wall: turn left (now facing north/west)
+    - If space ahead: move to next row and start west traversal
+    """
+    alternate_to_wall()  # Move east to wall, placing beepers alternately
+    turn_left()          # Turn to face north/left
+    
+    if front_is_clear():
+        start_next_line()      # Move to next row
+        turn_left()            # Turn to face west
+        complete_west_line()   # Start west traversal
+
+def complete_west_line():
+    """
+    WEST TRAVERSAL: Move left, alternately place/skip beepers.
+    When hitting west wall, turn and prepare for east traversal.
+    
+    Logic:
+    - Move west while alternating placement pattern
+    - At wall: turn right (now facing south/east)
+    - If space ahead: move to next row and start east traversal
+    """
+    alternate_to_wall()  # Move west to wall, placing beepers alternately
+    turn_right()         # Turn to face south/right
+    
+    if front_is_clear():
+        start_next_line()      # Move to next row
+        turn_right()           # Turn to face east
+        complete_east_line()   # Start east traversal
+
+def start_next_line():
+    """
+    TRANSITION TO NEXT ROW:
+    Move forward one position (to next row).
+    Auto-place beeper if position is empty (maintains pattern).
+    
+    This clever logic ensures:
+    - Alternating pattern continues across rows
+    - No manual row tracking needed
+    - Self-adjusts based on current beeper state
+    """
+    if beepers_present():
+        move()                 # Skip this position (beeper exists)
+    else:
+        move()                 # Move to next row
+        put_beeper()           # Place beeper at row start
+
+def alternate_to_wall():
+    """
+    CORE PATTERN LOGIC:
+    Traverse in current direction until hitting wall.
+    At each position:
+    - If beeper exists: move (skip placement)
+    - If NO beeper: move AND place beeper
+    
+    This creates alternating checkerboard pattern automatically.
+    Works for any grid width because it uses front_is_clear().
+    """
+    while front_is_clear():
+        if beepers_present():
+            move()              # Beeper exists, skip
+        else:
+            move()              # No beeper, place one
+            put_beeper()
+
+def turn_right():
+    """
+    Helper: Turn 90 degrees clockwise.
+    Karel only has turn_left(), so turn right = 3 left turns.
+    """
+    turn_left()
+    turn_left()
+    turn_left()
+
+def turn_around():
+    """
+    Helper: Turn 180 degrees (face opposite direction).
+    Two left turns = one half rotation.
+    """
+    turn_left()
+    turn_left()
+
+def return_main():
+    """
+    RETURN TO START: Navigate back to (1,1) facing East.
+    
+    Strategy:
+    1. Turn around (face opposite of current direction)
+    2. Move back to starting row
+    3. Turn right (prepare for column movement)
+    4. Move to far-left wall (column 1)
+    5. Face east (starting direction)
+    
+    Works for ANY grid size because:
+    - Uses while front_is_clear() for boundary detection
+    - No hardcoded coordinates
+    - Automatically handles variable grid dimensions
+    """
+    turn_around()              # Turn 180 degrees
+    
+    while front_is_clear():
+        move()                 # Move back to starting row
+    
+    turn_right()               # Turn to face left (west)
+    
+    # Move to far-left wall (column 1)
+    while front_is_clear():
+        move()
+    
+    turn_left()                # Turn to face east (starting direction)
+    turn_left()                # (two left turns = face east)
+
+if __name__ == '__main__':
+    main()

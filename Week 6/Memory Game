@@ -1,0 +1,94 @@
+import random
+
+NUM_PAIRS = 3
+
+def main():
+    # Milestone 1: create truth list
+    truth_list = []
+    for i in range(NUM_PAIRS):
+        truth_list.append(i)
+        truth_list.append(i)
+
+    # Milestone 2: shuffle
+    random.shuffle(truth_list)
+
+    # Milestone 3: displayed list
+    displayed = ['*'] * len(truth_list)
+
+    # Game loop
+    while True:
+        print(displayed)
+
+        # check win condition
+        if displayed.count('*') == 0:
+            print("Congratulations! You won!")
+            break
+
+        # get two valid indices
+        idx1 = get_valid_index(displayed)
+        idx2 = get_valid_index(displayed, idx1)
+
+        # reveal values
+        val1 = truth_list[idx1]
+        val2 = truth_list[idx2]
+
+        if val1 == val2:
+            print("Match!")
+            displayed[idx1] = val1
+            displayed[idx2] = val2
+            clear_terminal()
+        else:
+            print("Value at index", idx1, "is", val1)
+            print("Value at index", idx2, "is", val2)
+            print("No match. Try again.")
+            input("Press Enter to continue...")
+            clear_terminal()
+
+
+def get_valid_index(displayed, first_index=None):
+    while True:
+        try:
+            idx = int(input("Enter an index: "))
+
+            # out of bounds
+            if idx < 0 or idx >= len(displayed):
+                print("Invalid index. Try again.")
+                continue
+
+            # already revealed
+            if displayed[idx] != '*':
+                print("This number has already been matched. Try again.")
+                continue
+
+            # same index check (only for second input)
+            if first_index is not None and idx == first_index:
+                print("You entered the same index twice. Try again.")
+                continue
+
+            return idx
+
+        except ValueError:
+            print("Not a number. Try again.")
+
+
+def print_histogram_bar(word, count):
+    print(f"{word : <8}: {'x' * count}")
+
+
+def load_words_from_file(filepath):
+    words = []
+    with open(filepath, 'r') as file_reader:
+        for line in file_reader.readlines():
+            cleaned_line = line.strip()
+            if cleaned_line != '':
+                words.append(cleaned_line)
+    return words
+
+
+def clear_terminal():
+    for i in range(20):
+        print('\n')
+
+
+if __name__ == '__main__':
+    main()
