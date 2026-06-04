@@ -1,0 +1,40 @@
+from graphics import Canvas
+
+def main():
+    # draws two cars
+    canvas = Canvas(400, 400)
+    
+    # draw first car
+    x = 10
+    y = 10
+    draw_car(canvas, x, y)
+
+    # draw second car
+    x = 100
+    y = 100
+    draw_car(canvas, x, y)
+    
+    canvas.mainloop()
+
+def draw_car(canvas, x, y):
+    # draws a car at the location x, y
+    # Car body (main rectangle)
+    canvas.create_rectangle(x, y, x + 60, y + 25)
+    
+    # Car cabin/roof (top rectangle)
+    canvas.create_rectangle(x + 15, y - 15, x + 45, y)
+    
+    # Front wheel
+    canvas.create_oval(x + 12, y + 20, x + 22, y + 35)
+    
+    # Back wheel
+    canvas.create_oval(x + 42, y + 20, x + 52, y + 35)
+    
+    # Front window
+    canvas.create_rectangle(x + 18, y - 12, x + 32, y - 2)
+    
+    # Back window
+    canvas.create_rectangle(x + 32, y - 12, x + 42, y - 2)
+
+if __name__ == '__main__':
+    main()
