@@ -1,0 +1,23 @@
+def main():
+    # Get the first number
+    previous = float(input("Enter a number: "))
+    count = 1
+    
+    # Keep asking for numbers until one is smaller than the previous
+    while True:
+        current = float(input("Enter a number: "))
+        
+        # Check if current is smaller than previous (breaks the non-decreasing sequence)
+        if current < previous:
+            break
+        
+        # If we get here, current >= previous (non-decreasing)
+        previous = current
+        count += 1
+    
+    # Print the length of the sequence
+    print("Sequence length: " + str(count))
+
+
+if __name__ == "__main__":
+    main()
