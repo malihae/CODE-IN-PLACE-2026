@@ -1,0 +1,12 @@
+def main():
+    height = float(input("Enter your height in meters: "))
+    
+    if 1.6 <= height <= 1.9:  # More Pythonic!
+        print("Correct height to be an astronaut")
+    elif height < 1.6:
+        print("Below minimum astronaut height")
+    else:
+        print("Above maximum astronaut height")
+
+if __name__ == "__main__":
+    main()
