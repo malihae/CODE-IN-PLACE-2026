@@ -1,0 +1,32 @@
+from karel.stanfordkarel import *
+
+def main():
+    # you can also solve this problem with a while loop
+    while front_is_clear():
+        build_wave()
+        # you might be facing a wall at this point!
+        if front_is_clear():
+            move()
+            move()
+
+
+def build_wave():
+    put_beeper()
+    move()
+    put_beeper()
+    turn_left()
+    move()
+    put_beeper()
+    turn_around()
+    move()
+    turn_left()
+
+
+def turn_around():
+    turn_left()
+    turn_left()
+
+
+# don't edit these next two lines
+if __name__ == '__main__':
+    main()
